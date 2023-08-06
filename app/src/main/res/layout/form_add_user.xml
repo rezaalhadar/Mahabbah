@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:text="Data Pribadi"
+            android:text="Data Diri"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingBottom="8dp"
-            android:text="Kontak Pribadi"
+            android:text="Kontak"
             android:textSize="16sp" />
 
         <com.google.android.material.textfield.TextInputLayout
