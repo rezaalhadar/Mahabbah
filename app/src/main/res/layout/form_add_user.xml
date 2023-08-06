@@ -66,6 +66,28 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:hint="@string/form_adduser_status">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textfield_adduser_status"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Contoh: Janda Anak 3" />
+
+
     </LinearLayout>
 
     <LinearLayout
@@ -117,7 +139,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:hint="@string/form_adduser_alamat">
+            android:hint="@string/form_adduser_alamat_sekarang">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textfield_adduser_alamat"
@@ -136,7 +158,8 @@
         android:layout_height="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="gone">
 
         <TextView
             android:layout_width="match_parent"
@@ -185,9 +208,55 @@
                 android:id="@+id/textfield_adduser_tanggallahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:focusable="false"
                 android:clickable="true"
+                android:focusable="false"
                 android:onClick="showDatePickerDialog" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="8dp"
+        android:orientation="vertical"
+        tools:visibility="visible">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Data Perbankan"
+            android:textSize="16sp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/form_adduser_namabank">
+
+            <AutoCompleteTextView
+                android:id="@+id/textfield_adduser_namabank"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:paddingHorizontal="16dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="@string/form_adduser_nomorrekening">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textfield_adduser_nomorrekening"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

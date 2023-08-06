@@ -4,7 +4,7 @@
     <string name="title_user">Pengguna</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_webview">Webview</string>
-    <string name="title_adduser">Tambah User</string>
+    <string name="title_adduser">Tambah Pengguna</string>
 
     <!-- Dashboard -->
     <string name="hint_caridata">Cari Data</string>
@@ -13,17 +13,28 @@
     <string name="form_adduser_nama">Nama</string>
     <string name="form_adduser_namaayah">Nama Ayah</string>
     <string name="form_adduser_marga">Marga</string>
+    <string name="form_adduser_status">Status</string>
 
     <string name="form_adduser_nohp">Nomor Handphone</string>
     <string name="form_adduser_email">Email</string>
-    <string name="form_adduser_alamat">Alamat</string>
+    <string name="form_adduser_alamat_sekarang">Alamat Sekarang</string>
 
     <string name="form_adduser_nikktp">NIK KTP</string>
     <string name="form_adduser_tempatlahir">Tempat Lahir</string>
     <string name="form_adduser_tanggallahir">Tanggal Lahir</string>
 
+    <string name="form_adduser_namabank">Nama Bank</string>
+    <string name="form_adduser_nomorrekening">Nomor Rekening</string>
+
     <string name="form_adduser_button_save">Simpan Data</string>
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="bank_list">
+        <item>BCA</item>
+        <item>Mandiri</item>
+        <item>BNI</item>
+        <item>BRI</item>
+    </string-array>
 </resources>

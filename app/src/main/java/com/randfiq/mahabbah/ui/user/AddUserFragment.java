@@ -9,7 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.randfiq.mahabbah.R;
@@ -22,6 +23,7 @@ public class AddUserFragment extends Fragment {
     private View view;
 
     private TextInputEditText inputEditText_tanggallahir;
+
 
 
     @Override
@@ -40,12 +42,19 @@ public class AddUserFragment extends Fragment {
 
         inputEditText_tanggallahir = view.findViewById(R.id.textfield_adduser_tanggallahir);
 
-        inputEditText_tanggallahir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
+     // Get the AutoCompleteTextView reference from XML layout
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.textfield_adduser_namabank);
+
+        // Create an ArrayAdapter with the suggestions
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_dropdown_item_1line,
+                getResources().getStringArray(R.array.bank_list)
+        );
+
+        // Set the adapter for the AutoCompleteTextView
+        autoCompleteTextView.setAdapter(adapter);
+
+        inputEditText_tanggallahir.setOnClickListener(v -> showDatePickerDialog());
 
         return view;
 
