@@ -29,14 +29,11 @@ public class UserFragment extends Fragment {
 
         fab_adduser = view.findViewById(R.id.fab_addData);
 
-        fab_adduser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle bundle = new Bundle();
+        fab_adduser.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
 
-                NavController navController = Navigation.findNavController(view);
-                navController.navigate(R.id.action_navigation_user_to_navigation_adduser, bundle);
-            }
+            NavController navController = Navigation.findNavController(view);
+            navController.navigate(R.id.action_navigation_user_to_navigation_adduser, bundle);
         });
 
         return view;

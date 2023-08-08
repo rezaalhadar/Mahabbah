@@ -10,6 +10,11 @@
     <string name="hint_caridata">Cari Data</string>
 
     <!-- Form Add User -->
+    <string name="form_title1">Data Diri</string>
+    <string name="form_title2">Data Kontak</string>
+    <string name="form_title3">Data Indentitas</string>
+    <string name="form_title4">Data Perbankan</string>
+
     <string name="form_adduser_nama">Nama</string>
     <string name="form_adduser_namaayah">Nama Ayah</string>
     <string name="form_adduser_marga">Marga</string>
@@ -26,7 +31,10 @@
     <string name="form_adduser_namabank">Nama Bank</string>
     <string name="form_adduser_nomorrekening">Nomor Rekening</string>
 
-    <string name="form_adduser_button_save">Simpan Data</string>
+    <string name="form_adduser_action_save">Simpan Data</string>
+
+    <!-- Form Helper -->
+    <string name="form_helper_required">wajib di isi</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
