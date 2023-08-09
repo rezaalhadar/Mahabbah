@@ -9,8 +9,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="colorPrimary">#E64A19</color>
-    <color name="colorPrimaryVariant">#F57C00</color>
+    <color name="colorPrimary">#EC55DA</color>
+    <color name="colorPrimaryVariant">#CC25B8</color>
     <color name="colorOnPrimary">@color/white</color>
 
     <color name="toolbarTitleColor">#FF000000</color>

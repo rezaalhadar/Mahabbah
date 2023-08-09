@@ -9,6 +9,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,11 +18,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -42,12 +43,12 @@ public class AddUserFragment extends Fragment implements Constant {
 
     private View view;
 
-    AlertDialog AlertDialogInsertOperation;
-    View dvDialogInsertOperation;
+    AlertDialog AlertDialog_AddUserConfirm;
+    View dvDialog_AddUserConfirm;
     AlertDialog.Builder builder;
     ViewGroup viewGroup;
 
-    private ProgressBar proressBar_insertData;
+    String formattedDate;
 
     // Object Data Pribadi
     private TextInputEditText inputEditText_nama;
@@ -59,6 +60,7 @@ public class AddUserFragment extends Fragment implements Constant {
     private TextInputEditText inputEditText_nomor_hp;
     private TextInputEditText inputEditText_email;
     private TextInputEditText inputEditText_alamat;
+    private AutoCompleteTextView inputAutoCompletTextView_wilayah;
 
     // Object Data Identitas
     private TextInputEditText inputEditText_nik_ktp;
@@ -70,9 +72,9 @@ public class AddUserFragment extends Fragment implements Constant {
     private TextInputEditText inputEditText_nomor_rekening;
 
     String nama, nama_ayah, marga, status;
-    String nomor_hp, email, alamat;
+    String nomor_hp, email, wilayah, alamat;
     String nik_ktp, tempat_lahir, tanggal_lahir;
-    String bank, nomor_rekening;
+    String nama_bank, nomor_rekening;
 
     boolean isField_Empty = true;
 
@@ -102,9 +104,10 @@ public class AddUserFragment extends Fragment implements Constant {
         inputEditText_nomor_hp = view.findViewById(R.id.textfield_adduser_nomor_hp);
         inputEditText_email = view.findViewById(R.id.textfield_adduser_email);
         inputEditText_alamat = view.findViewById(R.id.textfield_adduser_alamat);
+        inputAutoCompletTextView_wilayah = view.findViewById(R.id.textfield_adduser_wilayah);
 
         // Init Object Data Identitas
-        inputEditText_nik_ktp = view.findViewById(R.id.textfield_adduser_nikktp);
+        inputEditText_nik_ktp = view.findViewById(R.id.textfield_adduser_nik_ktp);
         inputEditText_tempat_lahir = view.findViewById(R.id.textfield_adduser_tempat_lahir);
         inputEditText_tanggal_lahir = view.findViewById(R.id.textfield_adduser_tanggal_lahir);
 
@@ -113,10 +116,41 @@ public class AddUserFragment extends Fragment implements Constant {
         inputEditText_nomor_rekening = view.findViewById(R.id.textfield_adduser_nomor_rekening);
 
         // Setup Object
-        setupAdapterBankList();
+        setupAdapter();
         inputEditText_tanggal_lahir.setOnClickListener(v -> showDatePickerDialog());
 
+        inputAutoCompletTextView_wilayah.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                inputAutoCompletTextView_wilayah.setError(null);
+            }
+        });
+
+        inputAutoCompletTextView_bank.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                inputAutoCompletTextView_bank.setError(null);
+            }
+        });
+
         return view;
+    }
+
+    private void setupAdapter(){
+        // Create an ArrayAdapter
+        ArrayAdapter<String> adapter_listBank = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_dropdown_item_1line,
+                getResources().getStringArray(R.array.list_bank)
+        );
+
+        ArrayAdapter<String> adapter_listWilayah = new ArrayAdapter<>(
+                requireContext(), android.R.layout.simple_dropdown_item_1line,
+                getResources().getStringArray(R.array.list_wilayah)
+        );
+
+        // Set the adapter for the AutoCompleteTextView
+        inputAutoCompletTextView_bank.setAdapter(adapter_listBank);
+        inputAutoCompletTextView_wilayah.setAdapter(adapter_listWilayah);
     }
 
     private void getTextField(){
@@ -128,13 +162,14 @@ public class AddUserFragment extends Fragment implements Constant {
 
         nomor_hp = String.valueOf(inputEditText_nomor_hp.getText());
         email = String.valueOf(inputEditText_email.getText());
+        wilayah = String.valueOf(inputAutoCompletTextView_wilayah.getText());
         alamat = String.valueOf(inputEditText_alamat.getText());
 
         nik_ktp = String.valueOf(inputEditText_nik_ktp.getText());
         tempat_lahir = String.valueOf(inputEditText_tempat_lahir.getText());
         tanggal_lahir = String.valueOf(inputEditText_tanggal_lahir.getText());
 
-        bank = String.valueOf(inputAutoCompletTextView_bank.getText());
+        nama_bank = String.valueOf(inputAutoCompletTextView_bank.getText());
         nomor_rekening = String.valueOf(inputEditText_nomor_rekening.getText());
     }
 
@@ -175,86 +210,84 @@ public class AddUserFragment extends Fragment implements Constant {
             isField_Empty = false;
         }
 
+        if (String.valueOf(inputAutoCompletTextView_wilayah.getText()).isEmpty()){
+            String hint = String.valueOf(inputAutoCompletTextView_wilayah.getHint());
+            inputAutoCompletTextView_wilayah.setError(hint + " " + getString(R.string.form_helper_required));
+            isField_Empty = true;
+        } else {
+            inputAutoCompletTextView_wilayah.setError(null);
+            isField_Empty = false;
+        }
+
         field_ErrorHelper_Required(inputEditText_nomor_rekening);
     }
 
     private void openDialogInsertOperation(){
         builder = new AlertDialog.Builder(requireActivity());
         viewGroup = requireActivity().findViewById(android.R.id.content);
-        dvDialogInsertOperation = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_user_confirmation, viewGroup, false);
+        dvDialog_AddUserConfirm = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_user_confirm, viewGroup, false);
 
         // Init Object Dialog Insert Data
-        ImageButton imageButton_addData = dvDialogInsertOperation.findViewById(R.id.imageButton_addData);
-        Button button_addData = dvDialogInsertOperation.findViewById(R.id.button_addData);
-        proressBar_insertData = dvDialogInsertOperation.findViewById(R.id.simpleProgressBar);
-        proressBar_insertData.setVisibility(View.GONE);
+        Button button_saveNewData = dvDialog_AddUserConfirm.findViewById(R.id.button_saveNewData);
+        button_saveNewData.setOnClickListener(view -> insertDataToSheet());
 
-        imageButton_addData.setOnClickListener(v -> actionInsertData());
-        button_addData.setOnClickListener(v -> actionInsertData());
-
-        builder.setView(dvDialogInsertOperation);
-        AlertDialogInsertOperation = builder.create();
-        AlertDialogInsertOperation.show();
-    }
-
-    private void actionInsertData(){
-        if (!isField_Empty){
-            AlertDialogInsertOperation.dismiss();
+        button_saveNewData.setOnClickListener(view -> {
             insertDataToSheet();
-        } else {
-            Toast.makeText(requireContext(), "Please input all the field", Toast.LENGTH_LONG).show();
-        }
+            AlertDialog_AddUserConfirm.dismiss();
+        });
+
+        builder.setView(dvDialog_AddUserConfirm);
+        AlertDialog_AddUserConfirm = builder.create();
+        AlertDialog_AddUserConfirm.show();
     }
 
     private void insertDataToSheet() {
-        proressBar_insertData.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 WebAppBaseURL,
                 response -> {
-                    proressBar_insertData.setVisibility(View.GONE);
-                    // getDatasURL_Online();
                     Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show();
+                    if(response.equals("Success")){
+                        NavController navController = Navigation.findNavController(view);
+                        navController.popBackStack();
+                        Toast.makeText(requireContext(), "Data berhasil disimpan", Toast.LENGTH_LONG).show();
+                    }
                 },
-                error -> Toast.makeText(requireContext(), "Insert data failed, please try again", Toast.LENGTH_LONG).show()
+                error -> {
+                    Toast.makeText(requireContext(), "Gagal menyimpan data, mohon coba lagi", Toast.LENGTH_LONG).show();
+                }
         ) {
             @Override
             protected Map<String, String> getParams() {
-//                String nama, nama_ayah, marga, status;
-//                String nomor_hp, email, alamat;
-//                String nik_ktp, tempat_lahir, tanggal_lahir;
-//                String bank, nomor_rekening;
-
                 Map<String, String> params = new HashMap<>();
-
-                // Here we pass params
-                params.put("action", "insertData");
+                params.put(gscriptAction_key, gscriptAction_insertData_Pengguna);
 
                 params.put(key_nama, nama);
                 params.put(key_nama_ayah, nama_ayah);
                 params.put(key_marga, marga);
                 params.put(key_status, status);
 
+                params.put(key_nomor_hp, nomor_hp);
+                params.put(key_email, email);
+                params.put(key_wilayah, wilayah);
+                params.put(key_alamat, alamat);
+
+                params.put(key_nik_ktp, nik_ktp);
+                params.put(key_tempat_lahir, tempat_lahir);
+                params.put(key_tanggal_lahir, tanggal_lahir);
+
+                params.put(key_nama_bank, nama_bank);
+                params.put(key_nomor_rekening, nomor_rekening);
+
                 return params;
             }
         };
 
-        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+        int socketTimeOut = 50000;// u can change this .. here it is 20 seconds
         RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         stringRequest.setRetryPolicy(retryPolicy);
         RequestQueue queue = Volley.newRequestQueue(requireActivity());
         queue.add(stringRequest);
-    }
-
-    private void setupAdapterBankList(){
-        // Create an ArrayAdapter with the suggestions
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                requireContext(), android.R.layout.simple_dropdown_item_1line,
-                getResources().getStringArray(R.array.bank_list)
-        );
-
-        // Set the adapter for the AutoCompleteTextView
-        inputAutoCompletTextView_bank.setAdapter(adapter);
     }
 
     public void showDatePickerDialog() {
@@ -272,9 +305,9 @@ public class AddUserFragment extends Fragment implements Constant {
 
                     @SuppressLint("SimpleDateFormat")
                     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                    String formattedDate = dateFormat.format(selectedDate.getTime());
-
+                    formattedDate = dateFormat.format(selectedDate.getTime());
                     inputEditText_tanggal_lahir.setText(formattedDate);
+
                 }, year, month, day);
 
         datePickerDialog.show();
@@ -293,7 +326,10 @@ public class AddUserFragment extends Fragment implements Constant {
 
                 if (id == R.id.menu_savenew) {
                     checkField();
-                    Toast.makeText(requireContext(), "Seve New", Toast.LENGTH_SHORT).show();
+                    if (!isField_Empty){
+                        openDialogInsertOperation();
+                    }
+                    // Toast.makeText(requireContext(), "Seve New", Toast.LENGTH_SHORT).show();
                 }
 
                 return false;

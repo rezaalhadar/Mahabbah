@@ -8,8 +8,13 @@ public interface Constant {
     // https://script.google.com/macros/s/AKfycbzzZxxxxxxxxxxxxxxxxxxxxxxrg4KQjS9d0/exec?action=getItems
     // https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec
 
-    String WebAppBaseURL = "https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec";
-    String WebApp_ActionGetDatas = "https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec?action=getDatas";
+    String WebAppBaseURL =
+            "https://script.google.com/macros/s/AKfycbxWXN2ABQjK2r5PzGj3ahzajl_YRQcAQLwUiOLdhWsGhbPmdhPwAIDjK8cQVZNHMIcwOg/exec";
+    // String WebApp_ActionGetDatas = "https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec?action=getDatas";
+
+    // Google Script Action Parameter
+    String gscriptAction_key = "action";
+    String gscriptAction_insertData_Pengguna = "insertDataPengguna";
 
     // Data Key
     String key_keyRootData = "items";
@@ -23,6 +28,7 @@ public interface Constant {
     // Data Key - Kontak
     String key_nomor_hp = "nomor_hp";
     String key_email = "email";
+    String key_wilayah = "wilayah";
     String key_alamat = "alamat";
 
     // Data Key - Data Identitas
