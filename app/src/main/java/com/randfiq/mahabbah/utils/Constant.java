@@ -16,7 +16,7 @@ public interface Constant {
 
     // Data Key - Data Diri
     String key_nama = "nama";
-    String key_namaayah = "nama_ayah";
+    String key_nama_ayah = "nama_ayah";
     String key_marga = "marga";
     String key_status = "status";
 

@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.MenuProvider;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Lifecycle;
@@ -17,17 +18,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.RetryPolicy;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.randfiq.mahabbah.R;
+import com.randfiq.mahabbah.utils.Constant;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
-public class AddUserFragment extends Fragment {
+public class AddUserFragment extends Fragment implements Constant {
 
     private View view;
+
+    AlertDialog AlertDialogInsertOperation;
+    View dvDialogInsertOperation;
+    AlertDialog.Builder builder;
+    ViewGroup viewGroup;
+
+    private ProgressBar proressBar_insertData;
 
     // Object Data Pribadi
     private TextInputEditText inputEditText_nama;
@@ -156,6 +176,74 @@ public class AddUserFragment extends Fragment {
         }
 
         field_ErrorHelper_Required(inputEditText_nomor_rekening);
+    }
+
+    private void openDialogInsertOperation(){
+        builder = new AlertDialog.Builder(requireActivity());
+        viewGroup = requireActivity().findViewById(android.R.id.content);
+        dvDialogInsertOperation = LayoutInflater.from(requireContext()).inflate(R.layout.dialog_add_user_confirmation, viewGroup, false);
+
+        // Init Object Dialog Insert Data
+        ImageButton imageButton_addData = dvDialogInsertOperation.findViewById(R.id.imageButton_addData);
+        Button button_addData = dvDialogInsertOperation.findViewById(R.id.button_addData);
+        proressBar_insertData = dvDialogInsertOperation.findViewById(R.id.simpleProgressBar);
+        proressBar_insertData.setVisibility(View.GONE);
+
+        imageButton_addData.setOnClickListener(v -> actionInsertData());
+        button_addData.setOnClickListener(v -> actionInsertData());
+
+        builder.setView(dvDialogInsertOperation);
+        AlertDialogInsertOperation = builder.create();
+        AlertDialogInsertOperation.show();
+    }
+
+    private void actionInsertData(){
+        if (!isField_Empty){
+            AlertDialogInsertOperation.dismiss();
+            insertDataToSheet();
+        } else {
+            Toast.makeText(requireContext(), "Please input all the field", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void insertDataToSheet() {
+        proressBar_insertData.setVisibility(View.VISIBLE);
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                WebAppBaseURL,
+                response -> {
+                    proressBar_insertData.setVisibility(View.GONE);
+                    // getDatasURL_Online();
+                    Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show();
+                },
+                error -> Toast.makeText(requireContext(), "Insert data failed, please try again", Toast.LENGTH_LONG).show()
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+//                String nama, nama_ayah, marga, status;
+//                String nomor_hp, email, alamat;
+//                String nik_ktp, tempat_lahir, tanggal_lahir;
+//                String bank, nomor_rekening;
+
+                Map<String, String> params = new HashMap<>();
+
+                // Here we pass params
+                params.put("action", "insertData");
+
+                params.put(key_nama, nama);
+                params.put(key_nama_ayah, nama_ayah);
+                params.put(key_marga, marga);
+                params.put(key_status, status);
+
+                return params;
+            }
+        };
+
+        int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
+        RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        stringRequest.setRetryPolicy(retryPolicy);
+        RequestQueue queue = Volley.newRequestQueue(requireActivity());
+        queue.add(stringRequest);
     }
 
     private void setupAdapterBankList(){
