@@ -27,9 +27,11 @@ public class DataManager implements Constant {
     }
 
     public static void fetchData(Context context, final OnDataLoadedListener listener) {
-        RequestQueue queue = Volley.newRequestQueue(context);
+        String url_GoogleScript = GAppScript_Prefix + GAppScript_DeploymentID + GAppScript_Suffix;
+        String url_GoogleScriptWithAction = url_GoogleScript + "?action=" + gscriptAction_getData_Pengguna;
 
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, WebApp_ActionGetDatas, null,
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_GoogleScriptWithAction, null,
                 response -> {
                     try {
                         JSONArray jsonArray = response.getJSONArray("items");

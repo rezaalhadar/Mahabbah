@@ -14,7 +14,6 @@ import com.randfiq.mahabbah.data.model.DataPengguna;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class AdapterDataPengguna extends RecyclerView.Adapter<AdapterDataPengguna.ViewHolder> {
 	private final List<DataPengguna> itemList;
@@ -41,22 +40,21 @@ public class AdapterDataPengguna extends RecyclerView.Adapter<AdapterDataPenggun
 	}
 
 	public static class ViewHolder extends RecyclerView.ViewHolder {
-		TextView tvProductKode;
-		TextView tvProductName;
-		TextView tvProductPrice;
+		TextView tvNama;
+		TextView tvMarga;
 
 		public ViewHolder(@NonNull View itemView) {
 			super(itemView);
-			tvProductKode = itemView.findViewById(R.id.tv_productCode);
-			tvProductName = itemView.findViewById(R.id.tv_productName);
+			tvNama = itemView.findViewById(R.id.tv_nama);
+			tvMarga = itemView.findViewById(R.id.tv_marga);
 		}
 	}
 
 	@Override
 	public void onBindViewHolder(@NonNull AdapterDataPengguna.ViewHolder holder, int position) {
 		DataPengguna item = filteredList.get(position);
-		holder.tvProductKode.setText(item.getNama());
-		holder.tvProductName.setText(item.getWilayah());
+		holder.tvNama.setText(item.getNama());
+		holder.tvMarga.setText(item.getMarga());
 		holder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(item));
 	}
 
@@ -66,41 +64,18 @@ public class AdapterDataPengguna extends RecyclerView.Adapter<AdapterDataPenggun
 	}
 
 	@SuppressLint("NotifyDataSetChanged")
-	public void filter(String query) {
-		filterClearWhenEmpty(query);
-	}
-
-	@SuppressLint("NotifyDataSetChanged")
-	private void filterBasic(String input){
+	public void filterBasic(String input){
 		filteredList.clear();
 		if (input.isEmpty()) {
 			filteredList.addAll(itemList);
 		} else {
-			input = input.toLowerCase(Locale.getDefault());
+			input = input.toLowerCase().trim();
 			for (DataPengguna item : itemList) {
-				if (item.getNama().toLowerCase(Locale.getDefault()).contains(input)) {
+				if (item.getNama().toLowerCase().contains(input)) {
 					filteredList.add(item);
 				}
 			}
 		}
-		notifyDataSetChanged();
-	}
-
-	@SuppressLint("NotifyDataSetChanged")
-	private void filterClearWhenEmpty(String input){
-		filteredList.clear();
-		if (input.isEmpty()) {
-			notifyDataSetChanged();
-			return;
-		}
-
-		input = input.toLowerCase(Locale.getDefault());
-		for (DataPengguna item : itemList) {
-			if (item.getNama().toLowerCase(Locale.getDefault()).contains(input)) {
-				filteredList.add(item);
-			}
-		}
-
 		notifyDataSetChanged();
 	}
 

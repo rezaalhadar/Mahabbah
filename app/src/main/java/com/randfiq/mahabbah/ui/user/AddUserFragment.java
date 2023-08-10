@@ -3,15 +3,6 @@ package com.randfiq.mahabbah.ui.user;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.view.MenuProvider;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.view.MenuProvider;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -119,19 +118,8 @@ public class AddUserFragment extends Fragment implements Constant {
         setupAdapter();
         inputEditText_tanggal_lahir.setOnClickListener(v -> showDatePickerDialog());
 
-        inputAutoCompletTextView_wilayah.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                inputAutoCompletTextView_wilayah.setError(null);
-            }
-        });
-
-        inputAutoCompletTextView_bank.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                inputAutoCompletTextView_bank.setError(null);
-            }
-        });
+        inputAutoCompletTextView_wilayah.setOnItemClickListener((adapterView, view, i, l) -> inputAutoCompletTextView_wilayah.setError(null));
+        inputAutoCompletTextView_bank.setOnItemClickListener((adapterView, view, i, l) -> inputAutoCompletTextView_bank.setError(null));
 
         return view;
     }
@@ -242,9 +230,11 @@ public class AddUserFragment extends Fragment implements Constant {
     }
 
     private void insertDataToSheet() {
+        String url_GoogleScript = GAppScript_Prefix + GAppScript_DeploymentID + GAppScript_Suffix;
+
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                WebAppBaseURL,
+                url_GoogleScript,
                 response -> {
                     Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show();
                     if(response.equals("Success")){
