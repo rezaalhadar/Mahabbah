@@ -1,4 +1,4 @@
-package com.randfiq.mahabbah.data;
+package com.randfiq.mahabbah.data.model;
 
 public class DataPengguna {
 

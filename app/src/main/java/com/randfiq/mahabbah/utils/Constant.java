@@ -8,9 +8,11 @@ public interface Constant {
     // https://script.google.com/macros/s/AKfycbzzZxxxxxxxxxxxxxxxxxxxxxxrg4KQjS9d0/exec?action=getItems
     // https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec
 
+    String GAppScript_DeploymentID = "";
+
     String WebAppBaseURL =
             "https://script.google.com/macros/s/AKfycbxWXN2ABQjK2r5PzGj3ahzajl_YRQcAQLwUiOLdhWsGhbPmdhPwAIDjK8cQVZNHMIcwOg/exec";
-    // String WebApp_ActionGetDatas = "https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec?action=getDatas";
+    String WebApp_ActionGetDatas = "https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec?action=getDatas";
 
     // Google Script Action Parameter
     String gscriptAction_key = "action";

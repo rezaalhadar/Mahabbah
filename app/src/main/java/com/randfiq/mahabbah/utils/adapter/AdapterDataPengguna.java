@@ -1,4 +1,4 @@
-package com.randfiq.mahabbah.utils;
+package com.randfiq.mahabbah.utils.adapter;
 
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.randfiq.mahabbah.R;
-import com.randfiq.mahabbah.data.DataPengguna;
+import com.randfiq.mahabbah.data.model.DataPengguna;
 
 import java.util.ArrayList;
 import java.util.List;
