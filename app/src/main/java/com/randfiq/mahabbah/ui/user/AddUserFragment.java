@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -32,6 +31,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.randfiq.mahabbah.R;
 import com.randfiq.mahabbah.utils.Constant;
+import com.randfiq.mahabbah.utils.GoogleAppsScript_Tools;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -206,7 +206,6 @@ public class AddUserFragment extends Fragment implements Constant {
             inputAutoCompletTextView_wilayah.setError(null);
             isField_Empty = false;
         }
-
         field_ErrorHelper_Required(inputEditText_nomor_rekening);
     }
 
@@ -230,11 +229,10 @@ public class AddUserFragment extends Fragment implements Constant {
     }
 
     private void insertDataToSheet() {
-        String url_GoogleScript = GAppScript_Prefix + GAppScript_DeploymentID + GAppScript_Suffix;
-
+        String WebAppSimpleURL = new GoogleAppsScript_Tools().setupSimpleWebAppURL(WebApp_DeploymentID);
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                url_GoogleScript,
+                WebAppSimpleURL,
                 response -> {
                     Toast.makeText(requireContext(), response, Toast.LENGTH_LONG).show();
                     if(response.equals("Success")){

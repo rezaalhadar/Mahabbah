@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.randfiq.mahabbah.data.model.DataPengguna;
 import com.randfiq.mahabbah.utils.Constant;
+import com.randfiq.mahabbah.utils.GoogleAppsScript_Tools;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,19 +20,16 @@ import java.util.List;
 
 public class DataManager implements Constant {
 
-    private static final String TAG = "NetworkManager";
-
     public interface OnDataLoadedListener {
         void onDataLoaded(List<DataPengguna> items);
         void onError(String errorMessage);
     }
 
     public static void fetchData(Context context, final OnDataLoadedListener listener) {
-        String url_GoogleScript = GAppScript_Prefix + GAppScript_DeploymentID + GAppScript_Suffix;
-        String url_GoogleScriptWithAction = url_GoogleScript + "?action=" + gscriptAction_getData_Pengguna;
+        String WebAppURL = new GoogleAppsScript_Tools().setSingleActionWebApp(WebApp_DeploymentID, WebApp_Action_getData_Pengguna);
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url_GoogleScriptWithAction, null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, WebAppURL, null,
                 response -> {
                     try {
                         JSONArray jsonArray = response.getJSONArray("items");

@@ -2,6 +2,9 @@ package com.randfiq.mahabbah.data.model;
 
 public class DataPengguna {
 
+    private String timeStamp;
+    private String dataID;
+
     private String nama;
     private String nama_ayah;
     private String marga;
@@ -19,7 +22,9 @@ public class DataPengguna {
     private String nama_bank;
     private String nomor_rekening;
 
-    public DataPengguna(String nama, String nama_ayah, String marga, String status, String nomor_hp, String email, String wilayah, String alamat, String nik_ktp, String tempat_lahir, String tanggal_lahir, String nama_bank, String nomor_rekening) {
+    public DataPengguna(String timeStamp, String dataID, String nama, String nama_ayah, String marga, String status, String nomor_hp, String email, String wilayah, String alamat, String nik_ktp, String tempat_lahir, String tanggal_lahir, String nama_bank, String nomor_rekening) {
+        this.timeStamp = timeStamp;
+        this.dataID = dataID;
         this.nama = nama;
         this.nama_ayah = nama_ayah;
         this.marga = marga;
@@ -33,6 +38,14 @@ public class DataPengguna {
         this.tanggal_lahir = tanggal_lahir;
         this.nama_bank = nama_bank;
         this.nomor_rekening = nomor_rekening;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public String getDataID() {
+        return dataID;
     }
 
     public String getNama() {

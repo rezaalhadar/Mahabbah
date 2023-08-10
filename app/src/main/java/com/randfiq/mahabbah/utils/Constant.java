@@ -8,14 +8,13 @@ public interface Constant {
     // https://script.google.com/macros/s/AKfycbzzZxxxxxxxxxxxxxxxxxxxxxxrg4KQjS9d0/exec?action=getItems
     // https://script.google.com/macros/s/AKfycbzqCw8ydb13cVpkVfky5NMlkAJaHASkc7XugvwD2AAZPKLDmhegkZEcgIrzz_NKfmyp/exec
 
-    String GAppScript_Prefix = "https://script.google.com/macros/s/";
-    String GAppScript_Suffix = "/exec";
-    String GAppScript_DeploymentID = "AKfycbw0TbzhWqmPC8__oq0H08Eo8qDSc0zE19LUZkxG-jLNALtKVSODimfTrlptLMBNkMXscw";
+    // Google Script WebApp
+    String WebApp_DeploymentID = "AKfycbw0TbzhWqmPC8__oq0H08Eo8qDSc0zE19LUZkxG-jLNALtKVSODimfTrlptLMBNkMXscw";
 
-    // Google Script Action Parameter
+    // Google Script WebApp Action Parameter
     String gscriptAction_key = "action";
     String gscriptAction_insertData_Pengguna = "insertDataPengguna";
-    String gscriptAction_getData_Pengguna = "getDataPengguna";
+    String WebApp_Action_getData_Pengguna = "getDataPengguna";
 
     // Data Key
     String key_keyRootData = "items";
